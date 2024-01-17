@@ -27,6 +27,7 @@
         <!-- Theme style rtl -->
         <!--<link href="assets/dist/css/component_ui_rtl.css" rel="stylesheet" type="text/css"/>-->
         <!-- Custom css -->
+        <link href="{{ asset('assets/plugins/toastr/toastr.min.css') }}" rel=stylesheet type="text/css"/>
         <link href="{{ asset('assets/dist/css/custom.css') }}" rel="stylesheet" type="text/css"/>
     </head>
     <body>
@@ -81,7 +82,15 @@
         <!-- /.content-wrapper -->
         <!-- jQuery -->
         <script src="{{ asset('assets/plugins/jQuery/jquery-1.12.4.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
         <!-- bootstrap js -->
         <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script>
+            @if($errors->any())
+                @foreach($errors->all() as $error)
+                    toastr.error('{{ $error }}');
+                @endforeach
+            @endif
+        </script>
     </body>
 </html>
