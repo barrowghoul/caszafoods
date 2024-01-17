@@ -1,0 +1,26 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : Jun 6, 2017, 11:35:42 AM
+    Author     : Use
+*/
+
+
+/*YOUR CUSTOM STYLE STARTED IN HERE*/
+
+icon{
+    color: #E2241B;
+}
+
+.view-header .header-icon{
+    color: #E2241B;
+}
+
+::selection {
+    color: #fff;
+    background: #E2241B;
+    text-shadow: none
+}
