@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('mobile')->nullable();
             $table->string('password');
-            $table->string('profile_photo')->nullable();
+            $table->string('avatar')->default('/images/avatars/default.png');;
             $table->string('photo')->nullable();
             $table->string('job_position')->nullable();
             $table->boolean('status')->default(1);

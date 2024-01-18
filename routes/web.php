@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardProfileController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,9 +24,13 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    /*Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');*/
+    Route::get('profile', [DashboardProfileController::class, 'index'])->name('profile');
+    Route::put('profile', [DashboardProfileController::class, 'updateProfile'])->name('profile.update');
+    Route::put('profile/password', [DashboardProfileController::class, 'updatePassword'])->name('profile.password.update');
+    Route::get('settings', [DashboardProfileController::class, 'settings'])->name('settings');
 });
 
 require __DIR__.'/auth.php';
