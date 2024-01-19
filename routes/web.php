@@ -31,6 +31,11 @@ Route::middleware('auth')->group(function () {
     Route::put('profile', [DashboardProfileController::class, 'updateProfile'])->name('profile.update');
     Route::put('profile/password', [DashboardProfileController::class, 'updatePassword'])->name('profile.password.update');
     Route::get('settings', [DashboardProfileController::class, 'settings'])->name('settings');
+    Route::get('users', [DashboardProfileController::class, 'users'])->name('users');
+    Route::get('users/create', [DashboardProfileController::class, 'usersCreate'])->name('users.create');
+    Route::post('users/create', [DashboardProfileController::class, 'usersStore'])->name('users.store');
+    Route::get('users/edit/{user}', [DashboardProfileController::class, 'usersEdit'])->name('users.edit');
+    Route::get('users/delete/{user}', [DashboardProfileController::class, 'usersDestroy'])->name('users.delete');
 });
 
 require __DIR__.'/auth.php';

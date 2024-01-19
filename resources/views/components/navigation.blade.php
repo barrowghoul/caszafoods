@@ -77,10 +77,12 @@
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li><a href="{{ route('profile') }}"><i class="ti-user"></i>&nbsp; Profile</a></li>
-                    <li><a href="mailbox.html"><i class="ti-email"></i>&nbsp; My Messages</a></li>
                     <li><a href="lockscreen.html"><i class="ti-lock"></i>&nbsp; Lock Screen</a></li>
                     @if(Auth::user()->hasRole('Administrador'))
                         <li><a href="{{ route('settings') }}"><i class="ti-settings"></i>&nbsp; {{ __('Settings') }}</a></li>
+                    @endif
+                    @if(Auth::user()->hasRole('Administrador'))
+                        <li><a href="{{ route('users') }}"><i class="ti-user"></i>&nbsp; {{ __('Users') }}</a></li>
                     @endif
                     <li>
                         <form method="POST" action="{{ route('logout') }}">

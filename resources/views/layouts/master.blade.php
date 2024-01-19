@@ -26,7 +26,9 @@
     <link href="{{ asset('assets/plugins/monthly/monthly.min.css') }}" rel=stylesheet type="text/css" />
     <link href="{{ asset('assets/plugins/amcharts/export.css') }}" rel=stylesheet type="text/css" />
     <link href="{{ asset('assets/dist/css/component_ui.min.css') }}" rel=stylesheet type="text/css" />
+    <link href="{{ asset('assets/plugins/jquery.sumoselect/sumoselect.min.css') }}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    
     <link id=defaultTheme href="{{ asset('assets/dist/css/skins/skin-dark-1.min.css') }}" rel=stylesheet
         type="text/css" />
     <link href="{{ asset('assets/dist/css/custom.css') }}" rel=stylesheet type="text/css" />
