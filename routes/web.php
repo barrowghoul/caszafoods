@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::post('users/create', [DashboardProfileController::class, 'usersStore'])->name('users.store');
     Route::get('users/edit/{user}', [DashboardProfileController::class, 'usersEdit'])->name('users.edit');
     Route::get('users/delete/{user}', [DashboardProfileController::class, 'usersDestroy'])->name('users.delete');
+    Route::get('roles/create', [DashboardProfileController::class, 'roleCreate'])->name('roles.create');
+    Route::post('roles/create', [DashboardProfileController::class, 'roleStore'])->name('roles.store');
 });
 
 require __DIR__.'/auth.php';

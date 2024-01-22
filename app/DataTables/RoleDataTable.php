@@ -23,7 +23,9 @@ class RoleDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'role.action')
+            ->addColumn('action', function($query){
+                $edit = "<a href='".route('users.edit', $query->id)."' class='btn btn-primary'><i class='material-icons'>mode_edit</i></a>";
+            })
             ->setRowId('id');
     }
 

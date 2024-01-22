@@ -98,4 +98,9 @@ class DashboardProfileController extends Controller
         toastr()->success('El usuario se ha actualizado exitosametne', 'Exito');
         return redirect()->back();
     }
+
+    function roleCreate() : View {
+
+        return view('profile.role-create');
+    }
 }
