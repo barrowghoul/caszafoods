@@ -30,7 +30,7 @@
                 <a href="#" class="material-ripple"><i class="material-icons">file_upload</i>{{ __('Import') }}<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     @if(auth()->user()->can('importar items'))
-                        <li><a href="invoice.html">{{ __('Inventory') }}</a></li>
+                        <li><a href="{{ route('import.items') }}">{{ __('Inventory') }}</a></li>
                     @endif
                     <li><a href="timeline.html">Vertical timeline</a></li>
                     <li><a href="horizontal_timeline.html">Horizontal timeline</a></li>

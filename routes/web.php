@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardProfileController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,13 @@ Route::middleware('auth')->group(function () {
     Route::get('users/delete/{user}', [DashboardProfileController::class, 'usersDestroy'])->name('users.delete');
     Route::get('roles/create', [DashboardProfileController::class, 'roleCreate'])->name('roles.create');
     Route::post('roles/create', [DashboardProfileController::class, 'roleStore'])->name('roles.store');
+
+    /*Import routes*/
+    Route::get('import/items', [ImportController::class, 'index_item'])->name('import.items');
+    Route::post('import/items', [ImportController::class, 'import_items'])->name('import.items');
+
+    /**Items Route */
+    Route::resource('items', App\Http\Controllers\ItemController::class)->names('items');
 });
 
 require __DIR__.'/auth.php';
