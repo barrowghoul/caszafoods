@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardProfileController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +47,7 @@ Route::middleware('auth')->group(function () {
 
     /**Items Route */
     Route::resource('items', App\Http\Controllers\ItemController::class)->names('items');
+    Route::resource('vendors', VendorController::class)->names('vendors');
 });
 
 require __DIR__.'/auth.php';

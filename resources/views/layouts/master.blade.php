@@ -5,6 +5,7 @@
     <meta charset=utf-8><!--  -->
     <meta http-equiv=X-UA-Compatible content="IE=edge">
     <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name=description content="">
     <meta name=author content="">
     <title>Caszafoods - Seiko ERP</title>
@@ -26,9 +27,10 @@
     <link href="{{ asset('assets/plugins/monthly/monthly.min.css') }}" rel=stylesheet type="text/css" />
     <link href="{{ asset('assets/plugins/amcharts/export.css') }}" rel=stylesheet type="text/css" />
     <link href="{{ asset('assets/dist/css/component_ui.min.css') }}" rel=stylesheet type="text/css" />
-    <link href="{{ asset('assets/plugins/jquery.sumoselect/sumoselect.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/plugins/jquery.sumoselect/sumoselect.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
-    
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+
     <link id=defaultTheme href="{{ asset('assets/dist/css/skins/skin-dark-1.min.css') }}" rel=stylesheet
         type="text/css" />
     <link href="{{ asset('assets/dist/css/custom.css') }}" rel=stylesheet type="text/css" />
@@ -76,6 +78,9 @@
     <script src="{{ asset('assets/dist/js/jQuery.style.switcher.min.js') }}"></script>
     <script src="{{ asset('assets/dist/js/jquery.uploadPreview.min.js') }}"></script>
     <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
     <script>
         $.uploadPreview({
             input_field: "#image-upload",
@@ -93,6 +98,52 @@
                 });
             @endforeach
         @endif
+    </script>
+
+    <script>
+        // Set CSRF at ajax header
+        //$.ajaxSetup({
+            //headers: {
+                //'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //}
+        //});
+
+        //Sweet Alert Implementation
+        $(document).ready(function() {
+            $('body').on('click', '.delete-item', function(e) {
+                e.preventDefault()
+                let url = $(this).attr('href');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            method: 'DELETE',
+                            url: url,
+                            data: {_token: "{{ csrf_token() }}"},
+                            success: function(response){
+                                if(response.status === 'success'){
+                                    toastr.success(response.message)
+                                    //$('#vendor-table').DataTable().draw();
+                                    window.location.reload();
+                                }else if(response.status === 'error'){
+                                    toastr.error(response.message)
+                                }
+                            },
+                            error: function(error){
+                                console.log(error);
+                            }
+                        })
+                    }
+                });
+            })
+        })
     </script>
     @stack('scripts')
 </body>
