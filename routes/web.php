@@ -3,7 +3,10 @@
 use App\Http\Controllers\DashboardProfileController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RequisitionController;
+use App\Http\Controllers\RequisitionDetailController;
 use App\Http\Controllers\VendorController;
+use App\Models\RequisitionDetail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,7 +50,15 @@ Route::middleware('auth')->group(function () {
 
     /**Items Route */
     Route::resource('items', App\Http\Controllers\ItemController::class)->names('items');
+
+    /**vendors Route */
     Route::resource('vendors', VendorController::class)->names('vendors');
+
+    /**requisitions Route */
+    Route::resource('requisitions', RequisitionController::class)->names('requisitions');
+    Route::post('requisition/details', [RequisitionDetailController::class, 'store'])->name('requisition.details.store');
+    Route::put('requisition/details', [RequisitionDetailController::class, 'update'])->name('requisition.details.update');
+    Route::delete('/requisition/details/{id}', [RequisitionDetailController::class, 'destroy'])->name('requisition.details.destroy');
 });
 
 require __DIR__.'/auth.php';
