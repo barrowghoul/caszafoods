@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\DataTables\RequisitionDataTable;
 use App\Models\Item;
 use App\Models\Requisition;
+use App\Models\User;
+use App\Notifications\RequisitionSent;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -45,9 +47,11 @@ class RequisitionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id) : View
     {
-        //
+        $requisition = Requisition::findOrFail($id);
+
+        return view('requisitions.show', compact('requisition'));
     }
 
     /**
@@ -74,8 +78,19 @@ class RequisitionController extends Controller
         }
         $requisition->status = 'revision';
         $requisition->save();
+        $this->sendNotification($requisition);
+
 
         return response(['status' => 'success', 'message' => 'La requisición se ha enviado a revisión']);
+    }
+
+    function sendNotification($requisition) : void {
+        $users = User::where('status', 1)->get();
+        foreach($users as $user){
+            if($user->hasPermissionTo('crear oc')){
+                $user->notify(new RequisitionSent($requisition));
+            }
+        }
     }
 
     /**
