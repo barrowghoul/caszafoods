@@ -114,8 +114,8 @@
                 e.preventDefault()
                 let url = $(this).attr('href');
                 Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to revert this!",
+                    title: "¿Desea borrar el registro?",
+                    text: "No podra revertir esta accion!",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",

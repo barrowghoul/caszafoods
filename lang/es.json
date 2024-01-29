@@ -132,6 +132,7 @@
     "Moved Permanently": "Movido permanentemente",
     "Multi-Status": "Multiestado",
     "Multiple Choices": "Múltiples opciones",
+    "My Notifications": "Mis Notificaciones",
     "My Profile": "Mi perfil",
     "Name": "Nombre",
     "Network Authentication Required": "Se requiere autenticación de red",
@@ -150,6 +151,7 @@
     "Not Found": "No encontrado",
     "Not Implemented": "No se ha implementado",
     "Not Modified": "No modificado",
+    "Notifications": "Notificaciones",
     "of": "de",
     "OK": "DE ACUERDO",
     "Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.": "Una vez que se elimine su cuenta, todos sus recursos y datos se eliminarán de forma permanente. Antes de borrar su cuenta, por favor descargue cualquier dato o información que desee conservar.",
@@ -207,6 +209,7 @@
     "Saved.": "Guardado.",
     "Search": "Buscar",
     "Search :name": "Buscar :name",
+    "See all your latest notifications": "Ver sus últimas notificaciones",
     "See Other": "Ver otros",
     "Select": "Seleccione",
     "Select All": "Seleccionar todo",
@@ -278,5 +281,6 @@
     "Yes": "Sí",
     "You are receiving this email because we received a password reset request for your account.": "Ha recibido este mensaje porque se solicitó un restablecimiento de contraseña para su cuenta.",
     "You're logged in!": "¡Usted está conectado!",
-    "Your email address is unverified.": "Su dirección de correo electrónico no está verificada."
+    "Your email address is unverified.": "Su dirección de correo electrónico no está verificada.",
+    "Your Notifications": "Sus Notificaciones"
 }

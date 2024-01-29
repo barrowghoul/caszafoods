@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Requisition;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,7 +18,7 @@ class RequisitionSent extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct($requisition)
+    public function __construct(Requisition $requisition)
     {
         $this->requisition = $requisition;
     }
@@ -29,7 +30,7 @@ class RequisitionSent extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -44,6 +45,15 @@ class RequisitionSent extends Notification implements ShouldQueue
                     ->line($requestor->name . ' ha creado una nueva requisición.')
                     ->action('Requisición ' . $this->requisition->id, url( route('requisitions.show',$this->requisition->id)))
                     ->line('Porfavor no responda a esta dirección de correo, este mailbox es usado solo para enviar correos automáticos.');
+    }
+
+    public function toDatabase() : array {
+        $requestor = User::find($this->requisition->user_id);
+        return [
+            'message' => $requestor->name . ' ha registrado una nueva requisición',
+            'url' => route('requisitions.show', $this->requisition->id),
+            'title' => 'Nueva requisición',
+        ];
     }
 
     /**
