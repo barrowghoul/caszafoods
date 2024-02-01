@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->enum('status', [Requisition::ABIERTA, Requisition::REVISION, Requisition::CERRADA])->default(Requisition::ABIERTA);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

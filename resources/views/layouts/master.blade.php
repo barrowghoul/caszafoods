@@ -28,6 +28,7 @@
     <link href="{{ asset('assets/plugins/amcharts/export.css') }}" rel=stylesheet type="text/css" />
     <link href="{{ asset('assets/dist/css/component_ui.min.css') }}" rel=stylesheet type="text/css" />
     <link href="{{ asset('assets/plugins/jquery.sumoselect/sumoselect.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/plugins/modals/modal-component.css') }}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
 

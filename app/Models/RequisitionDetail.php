@@ -18,4 +18,12 @@ class RequisitionDetail extends Model
     function item() : BelongsTo {
         return $this->belongsTo(Item::class);
     }
+
+    function requisition() : BelongsTo {
+        return $this->belongsTo(Requisition::class);
+    }
+
+    function purchase_order() : BelongsTo {
+        return $this->belongsTo(PurchaseOrder::class);
+    }
 }

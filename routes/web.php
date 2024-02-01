@@ -3,6 +3,9 @@
 use App\Http\Controllers\DashboardProfileController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PurchaseOrderController;
+use App\Http\Controllers\PurchaseOrderDetail;
+use App\Http\Controllers\PurchaseOrderDetailController;
 use App\Http\Controllers\RequisitionController;
 use App\Http\Controllers\RequisitionDetailController;
 use App\Http\Controllers\VendorController;
@@ -63,6 +66,16 @@ Route::middleware('auth')->group(function () {
     Route::post('requisition/details', [RequisitionDetailController::class, 'store'])->name('requisition.details.store');
     Route::put('requisition/details', [RequisitionDetailController::class, 'update'])->name('requisition.details.update');
     Route::delete('/requisition/details/{id}', [RequisitionDetailController::class, 'destroy'])->name('requisition.details.destroy');
+
+    /**Purchase orders Route */
+    Route::resource('purchase-orders', PurchaseOrderController::class)->names('purchase-orders');
+    Route::put('purchase-orders/remove/vendor/{id}', [PurchaseOrderController::class, 'remove_vendor'])->name('purchase-orders.remove.vendor');
+    Route::put('purchase-orders/details/add/{id}', [PurchaseOrderDetailController::class, 'store'])->name('purchase-orders.details.store');
+    Route::put('purchase-orders/details/update', [PurchaseOrderDetailController::class, 'update'])->name('purchase-orders.details.update');
+    Route::get('purchase-orders/details/{id}', [PurchaseOrderDetailController::class, 'get_details'])->name('purchase-orders.details');
+    Route::delete('purchase-orders/details/delete({id}', [PurchaseOrderDetailController::class, 'destroy'])->name('purchase-orders.details.destroy');
+    Route::get('purchase-orders/add/items/{id}', [PurchaseOrderController::class, 'add_items'])->name('purchase-order.add.items');
+    Route::put('purchase-orders/send/({id}', [PurchaseOrderController::class, 'send'])->name('purchase-orders.send');
 });
 
 require __DIR__.'/auth.php';
