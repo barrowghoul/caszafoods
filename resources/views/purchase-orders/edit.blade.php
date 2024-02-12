@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="conten">
+    <div class="content">
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="header-icon"><i class="pe-7s-note2"></i></div>
@@ -82,7 +82,7 @@
     <script src="{{ asset('assets/plugins/jquery.sumoselect/jquery.sumoselect.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/jquery.sumoselect/sumoselect-active.js') }}"></script>
     <script src="{{ asset('assets/plugins/modals/classie.js') }}"></script>
-        <script src="{{ asset('assets/plugins/modals/modalEffects.js') }}"></script>
+    <script src="{{ asset('assets/plugins/modals/modalEffects.js') }}"></script>
     <script>
         $(document).ready(function() {
             loadItems();

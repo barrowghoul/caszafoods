@@ -6,6 +6,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\PurchaseOrderDetail;
 use App\Http\Controllers\PurchaseOrderDetailController;
+use App\Http\Controllers\ReceptionController;
+use App\Http\Controllers\ReceptionDetailController;
 use App\Http\Controllers\RequisitionController;
 use App\Http\Controllers\RequisitionDetailController;
 use App\Http\Controllers\VendorController;
@@ -76,6 +78,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('purchase-orders/details/delete({id}', [PurchaseOrderDetailController::class, 'destroy'])->name('purchase-orders.details.destroy');
     Route::get('purchase-orders/add/items/{id}', [PurchaseOrderController::class, 'add_items'])->name('purchase-order.add.items');
     Route::put('purchase-orders/send/({id}', [PurchaseOrderController::class, 'send'])->name('purchase-orders.send');
+
+    /**Receptions Route */
+    Route::resource('receptions', ReceptionController::class)->names('receptions');
+    Route::get('receptions/orders/{id}', [ReceptionController::class, 'get_orders'])->name('receptions.orders');
+    Route::put('receptions/details/add/{id}', [ReceptionDetailController::class, 'store'])->name('reception.details.store');
+    Route::get('receptions/details/{id}', [ReceptionDetailController::class, 'get_details'])->name('reception.details');
+    Route::put('receptions/details/update', [ReceptionDetailController::class, 'update'])->name('receptions.details.update');
+    Route::put('receptions/send/({id}', [ReceptionController::class, 'send'])->name('receptions.send');
+
+    /**Vendor Invoices Routes */
+    Route::resource('vendor-invoices', App\Http\Controllers\VendorInvoiceController::class)->names('vendor-invoices');
 });
 
 require __DIR__.'/auth.php';

@@ -92,7 +92,7 @@ class PurchaseOrderController extends Controller
         if($po->details->count() == 0){
             return false;
         }
-        
+
         foreach($po->details as $detail){
             if($detail->quantity <= 0 || $detail->unit_price <= 0){
                 return false;
@@ -122,6 +122,7 @@ class PurchaseOrderController extends Controller
             $items = RequisitionDetail::with('item')->where('status', RequisitionDetail::OPENED)
                     //->where('purchase_id', null)->take(10)
                     ->orderBy('requisition_id', 'asc')
+                    ->take(10)
                     ->get();
         }else{
             $items = RequisitionDetail::with('item')->where('status', RequisitionDetail::OPENED)
