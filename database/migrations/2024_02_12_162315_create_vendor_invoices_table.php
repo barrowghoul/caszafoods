@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('vendor_id');
             $table->foreign('vendor_id')->references('id')->on('vendors');
             $table->string('invoice')->nullable();
-            $table->enum('status',[VendorInvoice::PENDIENTE, VendorInvoice::PAGADA, VendorInvoice::CANCELADA])->default(VendorInvoice::PENDIENTE);
+            $table->enum('status',[VendorInvoice::PENDIENTE, VendorInvoice::PAGADA, VendorInvoice::CANCELADA, VendorInvoice::VENCIDA])->default(VendorInvoice::PENDIENTE);
             $table->unsignedBigInteger('reception_id');
             $table->foreign('reception_id')->references('id')->on('receptions');
             $table->date('pay_date')->nullable();
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->decimal('total', 8,2);
             $table->string('transaction_code')->nullable();
             $table->datetime('payed_on')->nullable();
-            $table->timestamps(); 
+            $table->timestamps();
         });
     }
 

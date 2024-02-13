@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="conten">
+    <div class="content">
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="header-icon"><i class="pe-7s-news-paper"></i></div>

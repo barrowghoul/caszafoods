@@ -89,6 +89,7 @@ Route::middleware('auth')->group(function () {
 
     /**Vendor Invoices Routes */
     Route::resource('vendor-invoices', App\Http\Controllers\VendorInvoiceController::class)->names('vendor-invoices');
+    Route::put('vendor-invoices/pay/{id}', [App\Http\Controllers\VendorInvoiceController::class, 'pay'])->name('vendor-invoices.pay');  
 });
 
 require __DIR__.'/auth.php';

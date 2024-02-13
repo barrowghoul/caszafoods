@@ -14,6 +14,7 @@ class VendorInvoice extends Model
     const PENDIENTE = 'pendiente';
     const PAGADA = 'pagada';
     const CANCELADA = 'cancelada';
+    const VENCIDA = 'vencida';
 
     protected $fillable = [
         'vendor_id',
