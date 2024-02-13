@@ -19,54 +19,40 @@
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="material-icons">add_alert</i>
-                    <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                    @if(Auth::user()->unreadNotifications->count() > 0)
+                        <div class="notify"> <span class="heartbit"></span> <span class="label label-pill label-danger">{{ Auth::user()->unreadNotifications->count() }}</span> </div>
+                    @endif
+                    <!--<div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>-->
                     <!--<i class="ti-announcement"></i>-->
                     <!--<i class="ti-angle-down"></i>-->
                 </a>
                 <ul class="dropdown-menu dropdown-alerts">
                     <!--<li class="ui_popover_tooltip"></li>-->
-                    <li class="rad-dropmenu-header"><a href="#">Your Notifications</a></li>
-                    <li>
-                        <a class="rad-content" href="#">
-                            <div class="pull-left"><i class="fa fa-html5 fa-2x color-red"></i>
-                            </div>
-                            <div class="rad-notification-body">
-                                <div class="lg-text">Introduction to fetch()</div>
-                                <div class="sm-text">The fetch API</div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="rad-content" href="#">
-                            <div class="pull-left"><i class="fa fa-bitbucket fa-2x color-violet"></i>
-                            </div>
-                            <div class="rad-notification-body">
-                                <div class="lg-text">Check your BitBucket</div>
-                                <div class="sm-text">Last Chance</div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="rad-content" href="#">
-                            <div class="pull-left"><i class="fa fa-google fa-2x color-info"></i>
-                            </div>
-                            <div class="rad-notification-body">
-                                <div class="lg-text">Google Account</div>
-                                <div class="sm-text">example@gmail.com</div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="rad-content" href="#">
-                            <div class="pull-left"><i class="fa fa-amazon fa-2x color-green"></i>
-                            </div>
-                            <div class="rad-notification-body">
-                                <div class="lg-text">Amazon Simple Notification ...</div>
-                                <div class="sm-text">Lorem Ipsum is simply dummy text...</div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="rad-dropmenu-footer"><a href="#">See all notifications</a></li>
+                    <li class="rad-dropmenu-header"><a href="#">{{ __('Your Notifications') }}</a></li>
+                    @forelse (Auth::user()->notifications as $notification)
+                        <li>
+                            <a class="rad-content" href="{{ $notification->data['url'] }}">
+                                <!--<div class="pull-left"><i class="fa fa-html5 fa-2x color-red"></i>
+                                </div>-->
+                                <div class="rad-notification-body">
+                                    <div class="lg-text">{{ $notification->data['title'] }}</div>
+                                    <div class="sm-text">{{ $notification->data['message'] }}</div>
+                                    <div class="sm-text">{{ $notification->created_at->diffForHumans() }}</div>
+                                </div>
+                            </a>
+                        </li>
+                    @empty
+                        <li>
+                            <a class="rad-content" href="#">
+                                <!--<div class="pull-left"><i class="fa fa-html5 fa-2x color-red"></i>
+                                </div>-->
+                                <div class="rad-notification-body">
+                                    <div class="lg-text">{{ __('No notifications') }}</div>
+                                </div>
+                            </a>
+                        </li>
+                    @endforelse
+                    <li class="rad-dropmenu-footer"><a href="{{ route('notifications') }}">See all notifications</a></li>
                 </ul>  <!-- /.dropdown-alerts -->
                 <!-- /.dropdown-alerts -->
             </li>

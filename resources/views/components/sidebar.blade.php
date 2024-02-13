@@ -5,13 +5,13 @@
             <li class="active"><a href="index.html" class="material-ripple"><i class="material-icons">home</i> Dashboard</a></li>
             <li class="nav-heading "> <span>{{ __('Purchases') }}&nbsp;&nbsp;&nbsp;&nbsp;------</span></li>
             @if(auth()->user()->can('ver requisiciones'))
-                <li><a href="widgets.html"><i class="material-icons">widgets</i>{{ __('Requisitions') }}</a></li>
+                <li><a href="{{ route('requisitions.index') }}"><i class="material-icons">widgets</i>{{ __('Requisitions') }}</a></li>
             @endif
             @if(auth()->user()->can('ver oc'))
-                <li><a href="calender.html"><i class="material-icons">bookmark</i>{{ __('Purchase Orders') }}</a></li>
+                <li><a href="{{ route('purchase-orders.index') }}"><i class="material-icons">bookmark</i>{{ __('Purchase Orders') }}</a></li>
             @endif
             @if(auth()->user()->can('ver recepciones'))
-                <li><a href="calender.html"><i class="material-icons">assignment_turned_in</i>{{ __('Receptions') }}</a></li>
+                <li><a href="{{ route('receptions.index') }}"><i class="material-icons">assignment_turned_in</i>{{ __('Receptions') }}</a></li>
             @endif
 
             <li class="nav-heading "> <span>{{ __('Inventory') }}&nbsp;&nbsp;&nbsp;&nbsp;------</span></li>
@@ -23,14 +23,14 @@
                 <li><a href="calender.html"><i class="material-icons">receipt</i>{{ __('Invoices') }}</a></li>
             @endif
             @if(auth()->user()->can('ver proveedores'))
-                <li><a href="calender.html"><i class="material-icons">supervisor_account</i>{{ __('Vendors') }}</a></li>
+                <li><a href="{{ route('vendors.index') }}"><i class="material-icons">supervisor_account</i>{{ __('Vendors') }}</a></li>
             @endif
             <li class="nav-heading "> <span>{{ __('System Settings') }}&nbsp;&nbsp;&nbsp;&nbsp;------</span></li>
             <li>
                 <a href="#" class="material-ripple"><i class="material-icons">file_upload</i>{{ __('Import') }}<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     @if(auth()->user()->can('importar items'))
-                        <li><a href="invoice.html">{{ __('Inventory') }}</a></li>
+                        <li><a href="{{ route('import.items') }}">{{ __('Inventory') }}</a></li>
                     @endif
                     <li><a href="timeline.html">Vertical timeline</a></li>
                     <li><a href="horizontal_timeline.html">Horizontal timeline</a></li>

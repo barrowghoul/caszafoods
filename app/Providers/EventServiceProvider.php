@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\ReceptionModified;
+use App\Events\ReceptionSuccessful;
+use App\Events\VendorInvoicePayment;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,6 +20,18 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        ReceptionModified::class => [
+            'App\Listeners\CalculateDetailTotals',
+        ],
+        ReceptionSuccessful::class => [
+            'App\Listeners\CreateVendorInvoice',
+            'App\Listeners\UpdateInventoryAfterReception',
+            'App\Listeners\UpdateInventoryCostAfterReception',
+            'App\Listeners\UpdateVendorBalanceAfterReception'
+        ],
+        VendorInvoicePayment::class => [
+            'App\Listeners\UpdateVendorBalanceAfterPayment'
         ],
     ];
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\NotificationDataTable;
 use App\DataTables\RoleDataTable;
 use App\DataTables\UserDataTable;
 use App\Http\Requests\DashboardProfileUpdateRequest;
@@ -102,5 +103,40 @@ class DashboardProfileController extends Controller
     function roleCreate() : View {
 
         return view('profile.role-create');
+    }
+
+    function notifications(NotificationDataTable $dataTable)  {
+        return $dataTable->render('profile.notifications');
+    }
+
+    function notifications_delete(string $id){
+        try{
+            $notification = Auth::user()->notifications()->where('id', $id)->first();
+            $notification->delete();
+
+            return response(['status' => 'success', 'message' => 'La notificación se ha eliminado exitosamente']);
+        }catch(\Exception $e){
+            return response(['status' => 'error', 'message' => 'La notificación no se ha podido eliminar']);
+        }
+    }
+
+    function notifications_mark_as_read(string $id) : RedirectResponse{
+        $notification = Auth::user()->notifications()->where('id', $id)->first();
+        $notification->markAsRead();
+
+        toastr()->success('La notificación se ha marcado como leída', 'Exito');
+        return redirect()->back();
+    }
+
+    function notifications_mark_all_as_read() : RedirectResponse{
+        $notifications = Auth::user()->unreadNotifications->get();
+        dd($notifications);
+        foreach($notifications as $notification){
+            $notification->markAsRead();
+        }
+
+        toastr()->success('Todas las notificaciones se han marcado como leídas', 'Exito');
+        return redirect()->back();
+
     }
 }
