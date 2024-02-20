@@ -101,9 +101,9 @@
                         </form>
                     </div>
                 </div>
-                <div class="tab-pnane fade" id="tab2">
+                <div class="tab-pane fade" id="tab2">
                     <div class="panel-body">
-
+                        {{ $dataTable->table() }}
                     </div>
                 </div>
             </div>
@@ -113,6 +113,7 @@
 @push('scripts')
     <script src="{{ asset('assets/plugins/jquery.sumoselect/jquery.sumoselect.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/jquery.sumoselect/sumoselect-active.js') }}"></script>
+    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
     <script>
         var $selectBox = $('#is_service');
         $selectBox.on('change', function() {

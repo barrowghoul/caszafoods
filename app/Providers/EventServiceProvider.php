@@ -28,7 +28,8 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\CreateVendorInvoice',
             'App\Listeners\UpdateInventoryAfterReception',
             'App\Listeners\UpdateInventoryCostAfterReception',
-            'App\Listeners\UpdateVendorBalanceAfterReception'
+            'App\Listeners\UpdateVendorBalanceAfterReception',
+            'App\Listeners\ClosePO'
         ],
         VendorInvoicePayment::class => [
             'App\Listeners\UpdateVendorBalanceAfterPayment'

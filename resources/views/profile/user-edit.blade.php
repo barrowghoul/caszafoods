@@ -10,6 +10,7 @@
                 <small>{{ __('Edit a user´s account') }}</small>
                 <ol class="breadcrumb">
                     <li><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
+                    <li><a href="{{ route('users') }}">{{ __('Users') }}</a></li>
                     <li class="active">{{ __('Edit User') }}</li>
                 </ol>
             </div>
@@ -23,7 +24,7 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('profile.update', $user) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="form-group">

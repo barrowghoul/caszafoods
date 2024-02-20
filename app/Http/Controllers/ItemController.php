@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\ItemDataTable;
+use App\DataTables\ItemsPurchaseDataTable;
 use App\Http\Requests\ItemRequest;
 use App\Models\Family;
 use App\Models\Item;
@@ -72,13 +73,13 @@ class ItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Item $item) : View
+    public function edit(ItemsPurchaseDataTable $dataTable, Item $item)
     {
         $taxes = Tax::all();
         $families = Family::all();
         $units = Unit::all();
 
-        return view('items.edit', compact('item', 'taxes', 'families', 'units'));
+        return $dataTable->with('id', $item->id)->render('items.edit', compact('item', 'taxes', 'families', 'units'));
     }
 
     /**

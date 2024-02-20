@@ -42,7 +42,10 @@ class VendorInvoiceDataTable extends DataTable
                 return $edit . $delete;
 
             })
-            ->rawColumns(['vendor_name','action','status'])
+            ->addColumn('total', function($query){
+                return '$' . number_format($query->total, 2, '.', ',');
+            })
+            ->rawColumns(['vendor_name','action','status', 'total'])
             ->setRowId('id');
     }
 
@@ -88,7 +91,7 @@ class VendorInvoiceDataTable extends DataTable
             Column::make('invoice'),
             Column::computed('status'),
             Column::make('pay_date'),
-            Column::make('total'),
+            Column::computed('total'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

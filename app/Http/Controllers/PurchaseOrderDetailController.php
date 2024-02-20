@@ -22,6 +22,7 @@ class PurchaseOrderDetailController extends Controller
                 'requisition_detail_id' => $item->id,
                 'tax_percentage' => $item->item->tax->factor,
                 'ieps_percentage' => $item->item->ieps,
+                'quantity' => $item->quantity,
             ]);
             $detail->save();
 

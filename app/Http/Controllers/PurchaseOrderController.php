@@ -76,6 +76,7 @@ class PurchaseOrderController extends Controller
             }
 
             $po->status = PurchaseOrder::ENVIADA;
+            $po->delivery_date = \Carbon\Carbon::now()->addDays($po->vendor->delivery_time);
             $po->save();
 
             $vendor = Vendor::findOrFail($po->vendor_id);
@@ -138,3 +139,4 @@ class PurchaseOrderController extends Controller
     }
 
 }
+//TODO Mark a requisition as "ordered" when all item are added to a PO
