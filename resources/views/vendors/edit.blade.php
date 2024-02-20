@@ -80,7 +80,15 @@
                         </form>
                     </div>
                 </div>
+                <div class="tab-pane fade in" id="tab2">
+                    <div class="panel-body">
+                        {{ $dataTable->table() }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 @endsection
+@push('scripts')
+    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+@endpush

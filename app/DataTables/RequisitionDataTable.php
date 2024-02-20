@@ -40,7 +40,10 @@ class RequisitionDataTable extends DataTable
                     return "<span class='label label-pill label-success'>En Proceso</span>";
                 }
             })
-            ->rawColumns(['user_name','action', 'status'])
+            ->addColumn('updated_at', function($query){
+                return $query->updated_at->diffForHumans();
+            })
+            ->rawColumns(['user_name','action', 'status', 'updated_at'])
             ->setRowId('id');
     }
 
@@ -84,7 +87,7 @@ class RequisitionDataTable extends DataTable
             Column::make('id'),
             Column::computed('user_name'),
             Column::computed('status'),
-            Column::make('updated_at'),
+            Column::computed('updated_at'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

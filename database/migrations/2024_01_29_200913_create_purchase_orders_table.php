@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('purchase_orders', function (Blueprint $table) {
-            $table->id(); 
+            $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('vendor_id')->nullable();
@@ -23,6 +23,7 @@ return new class extends Migration
             $table->decimal('ieps', 8,2)->default(0);
             $table->decimal('subtotal', 8, 2)->default(0);
             $table->decimal('total', 8, 2)->default(0);
+            $table->date('delivery_date')->nullable();
             $table->text('comments')->nullable();
             $table->softDeletes();
             $table->timestamps();

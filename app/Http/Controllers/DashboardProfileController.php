@@ -26,14 +26,20 @@ class DashboardProfileController extends Controller
         return view('profile.index');
     }
 
-    function updateProfile(DashboardProfileUpdateRequest $request) : RedirectResponse {
-        $user = Auth::user();
+    function updateProfile(DashboardProfileUpdateRequest $request, string $id) : RedirectResponse {
+        //$user = Auth::user();
+        $user = User::findOrFail($id);
 
         $imagePath = $this->uploadImage($request,'avatar',$user->avatar,'/images/avatars');
 
         $user->name = $request->name;
         $user->avatar = isset($imagePath) ? $imagePath : $user->avatar;
-        $user->email = $request->email;
+        if($user->email != $request->email){
+            $user->email = $request->email;
+        }
+
+        $user->syncRoles([$request->role]);
+
         $user->save();
 
         toastr()->success('Su perfil se ha actualizado exitosametne', 'Exito');

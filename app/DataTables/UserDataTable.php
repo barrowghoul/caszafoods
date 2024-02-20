@@ -35,7 +35,13 @@ class UserDataTable extends DataTable
                     return "<span class='label label-pill label-danger'>Suspendido</span>";
                 }
             })
-            ->rawColumns(['action','status'])
+            ->addColumn('updated_at', function($query){
+                return $query->updated_at->diffForHumans();
+            })
+            ->addColumn('role', function($query){
+                return $query->getRoleNames()->first();
+            })
+            ->rawColumns(['action','status','updated_at','Role'])
             ->setRowId('id');
     }
 
@@ -77,8 +83,9 @@ class UserDataTable extends DataTable
         return [
             Column::make('id')->width(60),
             Column::make('name')->width(200),
+            Column::computed('role'),
             Column::computed('status'),
-            Column::make('updated_at'),
+            Column::computed('updated_at'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

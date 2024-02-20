@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class PurchaseOrderDataTable extends DataTable
+class ItemsPurchaseDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -21,32 +21,12 @@ class PurchaseOrderDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
+
         return (new EloquentDataTable($query))
-            ->addColumn('action', function ($query) {
+            ->addColumn('action', function($query){
                 $edit = "<a href='" . route('purchase-orders.edit', $query->id) . "' class='btn btn-primary'><i class='material-icons'>mode_edit</i></a>";
                 return $edit;
             })
-            ->addColumn('user_name', function ($query) {
-                return $query->user->name;
-            })
-            ->addColumn('vendor_name', function ($query) {
-                return $query->vendor->name;
-            })
-            ->addColumn('updated_at', function ($query) {
-                return $query->updated_at->diffForHumans();
-            })
-            ->addColumn('status', function($query){
-                if($query->status === PurchaseOrder::ABIERTA){
-                    return "<span class='label label-pill label-primary'>Abierta</span>";
-                }else if($query->status === PurchaseOrder::ENVIADA){
-                    return "<span class='label label-pill label-warning'>En Proceso</span>";
-                }else if($query->status == PurchaseOrder::CANCELADA){
-                    return "<span class='label label-pill label-danger'>Cancelada</span>";
-                }else{
-                    return "<span class='label label-pill label-success'>Cerrada</span>";
-                }
-            })
-            ->rawColumns(['action', 'user_name', 'vendor_name', 'updated_at', 'status'])
             ->setRowId('id');
     }
 
@@ -55,7 +35,16 @@ class PurchaseOrderDataTable extends DataTable
      */
     public function query(PurchaseOrder $model): QueryBuilder
     {
-        return $model->newQuery();
+        //return $model->newQuery();
+        return $model->newQuery()
+            ->join('purchase_order_details', function($join){
+                $join->on('purchase_orders.id', '=', 'purchase_order_details.purchase_order_id');
+            })
+            ->join('items', function($join){
+                $join->on('purchase_order_details.item_id', '=', 'items.id');
+            })
+            ->where('purchase_order_details.item_id', '=', $this->id)
+            ->select('purchase_orders.id as id', 'items.name as item', 'purchase_order_details.quantity as quantity', 'purchase_orders.status as status');
     }
 
     /**
@@ -64,7 +53,7 @@ class PurchaseOrderDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('purchaseorder-table')
+            ->setTableId('itemspurchase-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -87,10 +76,9 @@ class PurchaseOrderDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::computed('user_name'),
-            Column::computed('vendor_name'),
-            Column::computed('status'),
-            Column::computed('updated_at'),
+            Column::make('item'),
+            Column::make('quantity'),
+            Column::make('status'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -104,6 +92,6 @@ class PurchaseOrderDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'PurchaseOrder_' . date('YmdHis');
+        return 'ItemsPurchase_' . date('YmdHis');
     }
 }

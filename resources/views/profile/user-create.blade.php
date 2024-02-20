@@ -10,6 +10,7 @@
                 <small>{{ __('Create a new user´s account') }}</small>
                 <ol class="breadcrumb">
                     <li><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
+                    <li><a href="{{ route('users') }}">{{ __('Users') }}</a></li>
                     <li class="active">{{ __('New User') }}</li>
                 </ol>
             </div>

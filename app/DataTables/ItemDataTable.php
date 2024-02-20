@@ -27,7 +27,10 @@ class ItemDataTable extends DataTable
 
                 return $edit;
             })
-            ->rawColumns(['action'])
+            ->addColumn('updated_at', function ($query) {
+                return $query->updated_at->diffForHumans();
+            })
+            ->rawColumns(['action','updated_at'])
             ->setRowId('id');
     }
 
@@ -72,7 +75,7 @@ class ItemDataTable extends DataTable
             Column::make('min'),
             Column::make('max'),
             Column::make('on_hand'),
-            Column::make('updated_at'),
+            Column::computed('updated_at'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

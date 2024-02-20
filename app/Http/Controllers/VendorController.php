@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\VendorDataTable;
+use App\DataTables\VendorsPurchaseDataTable;
 use App\Http\Requests\VendorRequest;
 use App\Models\Vendor;
 use Illuminate\Contracts\View\View;
@@ -58,9 +59,9 @@ class VendorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Vendor $vendor): View
+    public function edit(VendorsPurchaseDataTable $dataTable, Vendor $vendor)
     {
-        return view('vendors.edit', compact('vendor'));
+        return $dataTable->with('id', $vendor->id)->render('vendors.edit', compact('vendor'));
     }
 
     /**
