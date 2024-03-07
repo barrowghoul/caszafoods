@@ -116,9 +116,19 @@ class ReceptionController extends Controller
     function sendNotification($reception) : void {
         $users = User::where('status', 1)->get();
         foreach($users as $user){
-            if($user->hasPermissionTo('ver facturas')){
+            if(config('settings.notify_reception_admin') === '1' && $user->hasRole('Administrador')){
                 $user->notify(new ReceptionDone($reception));
             }
+            elseif(config('settings.notify_reception_purchase') === '1' && $user->hasRole('Compras')){
+                $user->notify(new ReceptionDone($reception));
+            }
+            elseif(config('settings.notify_reception_purchase_admin') === '1' && $user->hasRole('Compras Admin')){
+                $user->notify(new ReceptionDone($reception));
+            }
+            elseif(config('settings.notify_reception_inventory') === '1' && $user->hasRole('Inventarios')){
+                $user->notify(new ReceptionDone($reception));
+            }
+            
         }
     }
 }

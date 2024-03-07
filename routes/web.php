@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\RTRequisitionCreatedEvent;
 use App\Http\Controllers\DashboardProfileController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProfileController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\ReceptionController;
 use App\Http\Controllers\ReceptionDetailController;
 use App\Http\Controllers\RequisitionController;
 use App\Http\Controllers\RequisitionDetailController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\VendorController;
 use App\Models\RequisitionDetail;
 use Illuminate\Support\Facades\Route;
@@ -47,11 +49,18 @@ Route::middleware('auth')->group(function () {
     Route::get('users/edit/{user}', [DashboardProfileController::class, 'usersEdit'])->name('users.edit');
     Route::get('users/delete/{user}', [DashboardProfileController::class, 'usersDestroy'])->name('users.delete');
     Route::get('roles/create', [DashboardProfileController::class, 'roleCreate'])->name('roles.create');
+    Route::get('roles/create', [DashboardProfileController::class, 'roles'])->name('roles.index');
     Route::post('roles/create', [DashboardProfileController::class, 'roleStore'])->name('roles.store');
     Route::get('profile/notifications', [DashboardProfileController::class, 'notifications'])->name('notifications');
     Route::get('profile/notifications/read/{notification}', [DashboardProfileController::class, 'notifications_mark_as_read'])->name('notifications.read');
     Route::get('profile/notifications/read/all', [DashboardProfileController::class, 'notifications_mark_all_as_read'])->name('notifications.read.all');
     Route::delete('/profile/notifications/delete/{id}', [DashboardProfileController::class, 'notifications_delete'])->name('notifications.delete');
+
+    /** Settings Routes */
+    Route::get('settings/notifications', [SettingController::class, 'notification_settings'])->name('settings.notifications');
+    Route::put('settings/email-settings', [SettingController::class, 'updateEmailSettings'])->name('settings.update-email');
+    Route::put('settings/pusher-settings', [SettingController::class, 'updatePusherSettings'])->name('settings.update-pusher');
+    Route::put('settings/notification-settings', [SettingController::class, 'updateNotificationSettings'])->name('settings.update-notification');
 
     /**Dashboard Route */
     Route::get('my-dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('my-dashboard');
@@ -93,6 +102,12 @@ Route::middleware('auth')->group(function () {
     /**Vendor Invoices Routes */
     Route::resource('vendor-invoices', App\Http\Controllers\VendorInvoiceController::class)->names('vendor-invoices');
     Route::put('vendor-invoices/pay/{id}', [App\Http\Controllers\VendorInvoiceController::class, 'pay'])->name('vendor-invoices.pay');
+
+    /** Test Routes */
+    Route::get('pusher-test', function(){
+        //dd(config('broadcasting'));
+        RTRequisitionCreatedEvent::dispatch('hello there!!!');
+    });
 });
 
 require __DIR__.'/auth.php';

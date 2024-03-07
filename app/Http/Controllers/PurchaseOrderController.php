@@ -6,6 +6,7 @@ use App\DataTables\PurchaseOrderDataTable;
 use App\DataTables\RequisitionDataTable;
 use App\Models\PurchaseOrder;
 use App\Models\RequisitionDetail;
+use App\Models\User;
 use App\Models\Vendor;
 use App\Notifications\POSent;
 use Illuminate\Contracts\View\View;
@@ -79,14 +80,40 @@ class PurchaseOrderController extends Controller
             $po->delivery_date = \Carbon\Carbon::now()->addDays($po->vendor->delivery_time);
             $po->save();
 
-            $vendor = Vendor::findOrFail($po->vendor_id);
-            $vendor->notify(new POSent($po));
-
+            $this->notifyVendor($po);
+            $this->sendNotification($po);
             return response(['status' => 'success']);
 
         } catch (\Exception $e) {
             return response(['status' => 'error', 'message' => $e->getMessage()]);
         }
+    }
+
+    function sendNotification($po) : void {
+        $users = User::where('status', 1)->get();
+        foreach($users as $user){
+            if(config('settings.notify_oc_admin') === '1' && $user->hasRole('Administrador')){
+                $user->notify(new POSent($po));
+            }
+            elseif(config('settings.notify_oc_purchase') === '1' && $user->hasRole('Compras')){
+                $user->notify(new POSent($po));
+            }
+            elseif(config('settings.notify_oc_purchase_admin') === '1' && $user->hasRole('Compras Admin')){
+                $user->notify(new POSent($po));
+            }
+            elseif(config('settings.notify_oc_inventory') === '1' && $user->hasRole('Inventarios')){
+                $user->notify(new POSent($po));
+            }
+        }
+    }
+
+    public function notifyVendor(PurchaseOrder $po){
+
+        if(config('settings.notify_vendor') === '1'){
+            $vendor = Vendor::findOrFail($po->vendor_id);
+            $vendor->notify(new POSent($po));
+        }
+
     }
 
     public function validatePO(PurchaseOrder $po) : bool{

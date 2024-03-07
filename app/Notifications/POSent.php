@@ -3,12 +3,14 @@
 namespace App\Notifications;
 
 use App\Models\PurchaseOrder;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class POSent extends Notification
+class POSent extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -29,7 +31,31 @@ class POSent extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        $vias = ['mail', 'database'];
+        if(config('settings.use_pusher') === '1'){
+            $vias[] = 'broadcast';
+        }
+        return $vias;
+    }
+
+    public function toDatabase() : array {
+        $purchaser = User::find($this->purchaseOrder->user_id);
+        return [
+            'message' => $purchaser->name . ' ha registrado una nueva orden de compra',
+            'url' => route('purchase-orders.edit', $this->purchaseOrder->id),
+            'title' => 'Nueva orden de compra',
+        ];
+    }
+
+    public function toBroadcast(object $notifiable): BroadcastMessage
+    {
+        $purchaser = User::find($this->purchaseOrder->user_id);
+        return new BroadcastMessage([
+            'message' => $purchaser->name . ' ha registrado una nueva orden de compra',
+            'url' => route('purchase-orders.edit', $this->purchaseOrder->id),
+            'title' => 'Nueva orden de compra',
+        ]);
+
     }
 
     /**
