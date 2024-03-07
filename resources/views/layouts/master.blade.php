@@ -29,6 +29,7 @@
     <link href="{{ asset('assets/dist/css/component_ui.min.css') }}" rel=stylesheet type="text/css" />
     <link href="{{ asset('assets/plugins/jquery.sumoselect/sumoselect.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/modals/modal-component.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/plugins/bootstrap-toggle/bootstrap-toggle.min.css') }}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
 
@@ -39,6 +40,13 @@
                     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
                     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
                 <![endif]-->
+    <script>
+        var pusherKey = "{{ config('settings.pusher_app_key') }}"
+        var pusherCluster = "{{ config('settings.pusher_app') }}"
+
+    </script>
+
+    @vite(['resources/js/app.js'])
 </head>
 
 <body>
@@ -147,6 +155,32 @@
             })
         })
     </script>
+    @auth
+        <script>
+            document.addEventListener('DOMContentLoaded', function(){
+                Echo.private('App.Models.User.' + {{ auth()->user()->id }})
+                .notification((notification) => {
+                    console.log(notification);
+                    let html = `<li>
+                            <a class="rad-content" href="${notification.url}">
+                                <!--<div class="pull-left"><i class="fa fa-html5 fa-2x color-red"></i>
+                                </div>-->
+                                <div class="rad-notification-body">
+                                    <div class="lg-text">${notification.title}</div>
+                                    <div class="sm-text">${notification.message}</div>
+                                    <div class="sm-text"></div>
+                                </div>
+                            </a>
+                        </li>`;
+                    $('.rt_notifications').prepend(html);
+                    toastr.info(notification.message, notification.title, {
+                        closeButton: true,
+                        progressBar: true,
+                    });
+                });
+            });
+        </script>
+    @endauth
     @stack('scripts')
 </body>
 

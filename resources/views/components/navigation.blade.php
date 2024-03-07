@@ -26,9 +26,9 @@
                     <!--<i class="ti-announcement"></i>-->
                     <!--<i class="ti-angle-down"></i>-->
                 </a>
-                <ul class="dropdown-menu dropdown-alerts">
+                <ul class="dropdown-menu dropdown-alerts rt_notifications">
                     <!--<li class="ui_popover_tooltip"></li>-->
-                    <li class="rad-dropmenu-header"><a href="#">{{ __('Your Notifications') }}</a></li>
+                    <!--<li class="rad-dropmenu-header"><a href="#">{{ __('Your Notifications') }}</a></li>-->
                     @forelse (Auth::user()->notifications as $notification)
                         <li>
                             <a class="rad-content" href="{{ $notification->data['url'] }}">

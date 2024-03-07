@@ -58,7 +58,11 @@ class DashboardProfileController extends Controller
         return redirect()->back();
     }
 
-    function settings(RoleDataTable $dataTable){
+    function settings() : View{
+        return view('settings.index');
+    }
+
+    public function roles(RoleDataTable $dataTable){
         return $dataTable->render('profile.settings');
     }
 

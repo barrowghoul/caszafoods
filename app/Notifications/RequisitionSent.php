@@ -8,6 +8,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\BroadcastMessage;
+use Illuminate\Support\Facades\Broadcast;
 
 class RequisitionSent extends Notification implements ShouldQueue
 {
@@ -30,7 +32,16 @@ class RequisitionSent extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['database','mail'];
+        $vias = ['database'];
+
+        if(config('settings.use_pusher') === '1'){
+            $vias[] = 'broadcast';
+        }
+
+        if(config('settings.use_email') === '1'){
+            $vias[] = 'mail';
+        }
+        return $vias;
     }
 
     /**
@@ -54,6 +65,16 @@ class RequisitionSent extends Notification implements ShouldQueue
             'url' => route('requisitions.show', $this->requisition->id),
             'title' => 'Nueva requisición',
         ];
+    }
+
+    public function toBroadcast(object $notifiable) : BroadcastMessage {
+
+        return new BroadcastMessage([
+            'message' => 'Se ha registrado una nueva requisición',
+            'url' => route('requisitions.edit', $this->requisition->id),
+            'title' => 'Nueva requisición',
+        ]);
+
     }
 
     /**

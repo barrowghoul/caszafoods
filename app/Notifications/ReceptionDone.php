@@ -8,8 +8,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class ReceptionDone extends Notification
+class ReceptionDone extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -30,7 +31,12 @@ class ReceptionDone extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        $vias = ['database'];
+        if(config('settings.use_pusher') === '1'){
+            $vias[] = 'broadcast';
+        }
+        //dd($vias);
+        return $vias;
     }
 
     public function toDatabase() : array {
@@ -39,8 +45,19 @@ class ReceptionDone extends Notification
         return [
             'message' => 'Se ha registrado una nueva factura',
             'title' => 'Nueva Factura de Proveedor',
-            'url' => route('receptions.show', $invoice),
+            'url' => route('vendor-invoices.edit', $invoice),
         ];
+    }
+
+    public function toBoradcast(object $notifiable): BroadcastMessage
+    {
+        $invoice = VendorInvoice::where('reception_id', $this->reception->id)->first();
+
+        return new BroadcastMessage([
+            'message' => 'Se ha registrado una nueva factura',
+            'title' => 'Nueva Factura de Proveedor',
+            'url' => route('vendor-invoices.edit', $invoice),
+        ]);
     }
 
     /**

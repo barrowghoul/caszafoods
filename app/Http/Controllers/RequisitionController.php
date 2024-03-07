@@ -86,8 +86,18 @@ class RequisitionController extends Controller
 
     function sendNotification($requisition) : void {
         $users = User::where('status', 1)->get();
+
         foreach($users as $user){
-            if($user->hasPermissionTo('crear oc')){
+            if(config('settings.notify_req_admin') === '1' && $user->hasRole('Administrador')){
+                $user->notify(new RequisitionSent($requisition));
+            }
+            elseif(config('settings.notify_req_purchase') === '1' && $user->hasRole('Compras')){
+                $user->notify(new RequisitionSent($requisition));
+            }
+            elseif(config('settings.notify_req_purchase_admin') === '1' && $user->hasRole('Compras Admin')){
+                $user->notify(new RequisitionSent($requisition));
+            }
+            elseif(config('settings.notify_req_inventory') === '1' && $user->hasRole('Inventarios')){
                 $user->notify(new RequisitionSent($requisition));
             }
         }
