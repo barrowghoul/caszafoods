@@ -3,6 +3,7 @@
 use App\Events\RTRequisitionCreatedEvent;
 use App\Http\Controllers\DashboardProfileController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\PurchaseOrderDetail;
@@ -56,6 +57,11 @@ Route::middleware('auth')->group(function () {
     Route::get('profile/notifications/read/all', [DashboardProfileController::class, 'notifications_mark_all_as_read'])->name('notifications.read.all');
     Route::delete('/profile/notifications/delete/{id}', [DashboardProfileController::class, 'notifications_delete'])->name('notifications.delete');
 
+    /**Menu routes */
+    Route::get('purchase-menu', [MenuController::class, 'purchase_menu'])->name('purchase.menu');
+    Route::get('inventory-menu', [MenuController::class, 'inventory_menu'])->name('inventory.menu');
+    Route::get('accounts-payable-menu', [MenuController::class, 'accounts_payable_menu'])->name('accounts-payable.menu');
+
     /** Settings Routes */
     Route::get('settings/notifications', [SettingController::class, 'notification_settings'])->name('settings.notifications');
     Route::put('settings/email-settings', [SettingController::class, 'updateEmailSettings'])->name('settings.update-email');
@@ -71,6 +77,12 @@ Route::middleware('auth')->group(function () {
 
     /**Items Route */
     Route::resource('items', App\Http\Controllers\ItemController::class)->names('items');
+
+    /**Families Route */
+    Route::resource('families', App\Http\Controllers\FamilyController::class)->names('families');
+
+    /**Units Route */
+    Route::resource('units', App\Http\Controllers\UnitController::class)->names('units');
 
     /**vendors Route */
     Route::resource('vendors', VendorController::class)->names('vendors');
