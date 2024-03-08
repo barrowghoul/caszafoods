@@ -17,7 +17,7 @@ class UnitSeeder extends Seeder
             'name' => 'N/A',
             'symbol' => 'N/A',
         ]);
-        
+
         $unit = Unit::create([
             'name' => 'Kilo',
             'symbol' => 'Kg',
@@ -76,6 +76,21 @@ class UnitSeeder extends Seeder
         $unit = Unit::create([
             'name' => 'Paquete',
             'symbol' => 'Paq',
+        ]);
+
+        $unit = Unit::create([
+            'name' => 'Bolsa',
+            'symbol' => 'Bol',
+        ]);
+
+        $unit = Unit::create([
+            'name' => 'Garrafón',
+            'symbol' => 'Garr',
+        ]);
+
+        $unit = Unit::create([
+            'name' => 'Cubeta',
+            'symbol' => 'Cub',
         ]);
     }
 }
