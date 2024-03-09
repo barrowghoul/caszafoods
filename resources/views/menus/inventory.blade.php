@@ -18,6 +18,18 @@
                 <div class="social-media-inner">
                     <ul class="social-media clearfix">
                         <li>
+                            <a href="{{ route('warehouses.index') }}">
+                                <i class="fa fa-building"></i>
+                                <p>{{ __('Warehouses') }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-12 cols-sm-6 col-md-1 col lg-1">
+                <div class="social-media-inner">
+                    <ul class="social-media clearfix">
+                        <li>
                             <a href="{{ route('items.index') }}">
                                 <i class="fa fa-th-large"></i>
                                 <p>{{ __('Items') }}</p>

@@ -62,13 +62,27 @@
                     </ul>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-xs-12 cols-sm-6 col-md-1 col lg-1">
                 <div class="social-media-inner">
                     <ul class="social-media clearfix">
                         <li>
                             <a href="{{ route('import.items') }}">
-                                <i class="fa fa-bell"></i>
+                                <i class="fa fa-level-up"></i>
                                 <p>{{ __('Import Items') }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-12 cols-sm-6 col-md-1 col lg-1">
+                <div class="social-media-inner">
+                    <ul class="social-media clearfix">
+                        <li>
+                            <a href="{{ route('import.vendors') }}">
+                                <i class="fa fa-level-up"></i>
+                                <p>{{ __('Import Vendors') }}</p>
                             </a>
                         </li>
                     </ul>

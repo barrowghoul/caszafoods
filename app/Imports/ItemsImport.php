@@ -28,6 +28,7 @@ class ItemsImport implements ToModel, WithHeadingRow, WithValidation
             'tax_id' => $row['impuesto'],
             'is_service' => $row['servicio'],
             'ieps' => $row['ieps'],
+            'warehouse_id' => $row['almacen'],
         ]);
     }
 
