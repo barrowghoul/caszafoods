@@ -23,4 +23,8 @@ class Vendor extends Model
         'status',
         'delivery_time',
     ];
+
+    public function purchase_orders() : HasMany{
+        return $this->hasMany(PurchaseOrder::class);
+    }
 }

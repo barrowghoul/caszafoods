@@ -10,7 +10,7 @@ class Item extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'code', 'cost', 'min', 'max', 'on_hand', 'family_id', 'unit_id', 'tax_id', 'is_service', 'ieps'];
+    protected $fillable = ['name', 'code', 'cost', 'min', 'max', 'on_hand', 'family_id', 'unit_id', 'tax_id', 'is_service', 'ieps', 'warehouse_id'];
 
     function family() : BelongsTo
     {
@@ -27,6 +27,12 @@ class Item extends Model
     function tax() :BelongsTo
     {
         return $this->belongsTo(Tax::class);
+
+    }
+
+    function warehouse() :BelongsTo
+    {
+        return $this->belongsTo(Warehouse::class);
 
     }
 }

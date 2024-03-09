@@ -26,6 +26,8 @@ return new class extends Migration
             $table->decimal('factor', 8,2)->default(0);
             $table->unsignedBigInteger('tax_id');
             $table->foreign('tax_id')->references('id')->on('taxes');
+            $table->unsignedBigInteger('warehouse_id');
+            $table->foreign('warehouse_id')->references('id')->on('warehouses');
             $table->boolean('is_service')->default(0);
             $table->softDeletes();
             $table->decimal('ieps', 8,2)->default(0);

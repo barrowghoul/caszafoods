@@ -74,6 +74,8 @@ Route::middleware('auth')->group(function () {
     /*Import routes*/
     Route::get('import/items', [ImportController::class, 'index_item'])->name('import.items');
     Route::post('import/items', [ImportController::class, 'import_items'])->name('import.items');
+    Route::get('import/vendors', [ImportController::class, 'index_vendors'])->name('import.vendors');
+    Route::post('import/vendors', [ImportController::class, 'import_vendors'])->name('import.vendors');
 
     /**Items Route */
     Route::resource('items', App\Http\Controllers\ItemController::class)->names('items');
@@ -114,6 +116,9 @@ Route::middleware('auth')->group(function () {
     /**Vendor Invoices Routes */
     Route::resource('vendor-invoices', App\Http\Controllers\VendorInvoiceController::class)->names('vendor-invoices');
     Route::put('vendor-invoices/pay/{id}', [App\Http\Controllers\VendorInvoiceController::class, 'pay'])->name('vendor-invoices.pay');
+
+    /**Warehouse Routes */
+    Route::resource('warehouses', App\Http\Controllers\WarehouseController::class)->names('warehouses');
 
     /** Test Routes */
     Route::get('pusher-test', function(){

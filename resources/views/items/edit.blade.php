@@ -94,6 +94,15 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <div class="col-xs-12 col-sm-12 col-md-4">
+                                    <label for="unit_id" id="unit_id-label">{{ __('Warehouse') }}</label>
+                                    <select name="warehouse_id" id="warehouse_id" class="testselect1">
+                                        <option value="" disabled>{{ __('Select a unit') }}</option>
+                                        @foreach ($warehouses as $warehouse)
+                                            <option value="{{ $warehouse->id }}" @if($item->warehouse_id == $warehouse->id) selected @endif>{{ $warehouse->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>

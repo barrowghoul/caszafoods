@@ -9,6 +9,7 @@ use App\Models\Family;
 use App\Models\Item;
 use App\Models\Tax;
 use App\Models\Unit;
+use App\Models\Warehouse;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -78,8 +79,9 @@ class ItemController extends Controller
         $taxes = Tax::all();
         $families = Family::all();
         $units = Unit::all();
+        $warehouses = Warehouse::all();
 
-        return $dataTable->with('id', $item->id)->render('items.edit', compact('item', 'taxes', 'families', 'units'));
+        return $dataTable->with('id', $item->id)->render('items.edit', compact('item', 'taxes', 'families', 'units', 'warehouses'));
     }
 
     /**
