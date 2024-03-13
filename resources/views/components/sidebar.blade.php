@@ -10,6 +10,7 @@
             @if(auth()->user()->can('ver facturas'))
                 <li><a href="{{ route('accounts-payable.menu') }}"><i class="material-icons">receipt</i>{{ __('Accounts Payable') }}</a></li>
             @endif
+            <li><a href="{{ route('production.menu') }}"><i class="material-icons">format_color_fill</i>{{ __('Production') }}</a></li>
         </ul>
     </div>
     <!-- /.sidebar-collapse -->
