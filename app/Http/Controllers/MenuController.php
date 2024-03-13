@@ -18,4 +18,8 @@ class MenuController extends Controller
     public function accounts_payable_menu() : View {
         return view('menus.accounts-payable');
     }
+
+    public function production_menu() : View {
+        return view('menus.production');
+    }
 }

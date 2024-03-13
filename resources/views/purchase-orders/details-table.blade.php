@@ -22,7 +22,7 @@
                     <td>{{ $detail->total }}</td>
                     <td>
                         @if($po->status == 'abierta')
-                            <a href='{{ route('purchase-orders.details.destroy', $detail->id) }}' class='btn btn-danger delete-detail'><i
+                            <a href="{{ route('purchase-orders.details.destroy', $detail->id) }}" class='btn btn-danger delete-detail'><i
                                 class='material-icons'>clear</i></a>
                         @endif
                     </td>

@@ -10,6 +10,8 @@ use App\Http\Controllers\PurchaseOrderDetail;
 use App\Http\Controllers\PurchaseOrderDetailController;
 use App\Http\Controllers\ReceptionController;
 use App\Http\Controllers\ReceptionDetailController;
+use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\RecipeDetailController;
 use App\Http\Controllers\RequisitionController;
 use App\Http\Controllers\RequisitionDetailController;
 use App\Http\Controllers\SettingController;
@@ -61,6 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::get('purchase-menu', [MenuController::class, 'purchase_menu'])->name('purchase.menu');
     Route::get('inventory-menu', [MenuController::class, 'inventory_menu'])->name('inventory.menu');
     Route::get('accounts-payable-menu', [MenuController::class, 'accounts_payable_menu'])->name('accounts-payable.menu');
+    Route::get('production-menu', [MenuController::class, 'production_menu'])->name('production.menu');
 
     /** Settings Routes */
     Route::get('settings/notifications', [SettingController::class, 'notification_settings'])->name('settings.notifications');
@@ -119,6 +122,14 @@ Route::middleware('auth')->group(function () {
 
     /**Warehouse Routes */
     Route::resource('warehouses', App\Http\Controllers\WarehouseController::class)->names('warehouses');
+
+    /**Receipe Routes */
+    Route::resource('recipes', App\Http\Controllers\RecipeController::class)->names('recipes');
+    Route::get('recipes/list/items/{id}', [RecipeController::class, 'load_items'])->name('recipes.list.items');
+    Route::put('recipes/details/add/{id}', [RecipeDetailController::class, 'store'])->name('recipes.details.store');
+    Route::get('recipes/details/{id}', [RecipeDetailController::class, 'get_details'])->name('recipes.details');
+    Route::delete('/recipes/details/{id}', [RecipeDetailController::class, 'destroy'])->name('recipes.details.destroy');
+    Route::put('recipes/details/update', [RecipeDetailController::class, 'update'])->name('recipes.details.update');
 
     /** Test Routes */
     Route::get('pusher-test', function(){
